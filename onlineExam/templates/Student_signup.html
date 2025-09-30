@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Signup</title>
+
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    @media (max-width: 500px) {
+      html {
+        font-size: 14px;
+      }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #eef2f7, #e0ecff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-container {
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      color: #1e3a8a;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .form-group i.icon-left {
+      position: absolute;
+      top: 38px;
+      left: 12px;
+      color: #6b7280;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    .form-group i.toggle-password {
+      position: absolute;
+      top: 38px;
+      right: 12px;
+      color: #6b7280;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px 38px 10px 38px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+      background-color: #fff;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      outline: none;
+    }
+
+    .btn {
+      width: 100%;
+      background-color: #2563eb;
+      color: white;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn:hover {
+      background-color: #1e40af;
+    }
+
+    .error-message {
+      background-color: #fee2e2;
+      color: #991b1b;
+      padding: 10px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+
+    .login-link a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h2>Student Signup</h2>
+
+    {% if error %}
+      <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="enroll">Enrollment Number</label>
+        <i class="bi bi-card-list icon-left"></i>
+        <input type="text" name="enroll" id="enroll" placeholder="Enter your enrollment number" required />
+      </div>
+
+      <div class="form-group">
+        <label for="loginid">Login ID</label>
+        <i class="bi bi-person-badge icon-left"></i>
+        <input type="text" name="loginid" id="loginid" placeholder="Create a login ID" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <i class="bi bi-lock-fill icon-left"></i>
+        <input type="password" name="password" id="password" placeholder="Create a strong password" required />
+        <i class="bi bi-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <i class="bi bi-envelope-fill icon-left"></i>
+        <input type="email" name="email" id="email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact</label>
+        <i class="bi bi-telephone-fill icon-left"></i>
+        <input type="tel" name="contact" id="contact" placeholder="Enter your contact number" pattern="[0-9]{10}" title="Enter a 10-digit number" required />
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="{% url 'student_login' %}">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("togglePassword");
+    const password = document.getElementById("password");
+
+    toggle.addEventListener("click", function () {
+      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+      this.classList.toggle("bi-eye");
+      this.classList.toggle("bi-eye-slash");
+    });
+  </script>
+</body>
+</html>
